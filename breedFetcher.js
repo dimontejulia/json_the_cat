@@ -1,6 +1,4 @@
 const request = require("request");
-const args = process.argv;
-let breedName = args.slice(2, args.length).join();
 
 const fetchBreedDescription = function (breedName, callback) {
   const url = "https://api.thecatapi.com/v1/breeds/search?q=" + breedName;
@@ -10,10 +8,10 @@ const fetchBreedDescription = function (breedName, callback) {
     }
     const data = JSON.parse(body);
     if (data.length === 0) {
-      callback("Cat not found :(");
+      callback("Cat not found", null);
     } else {
       //cat exists
-      callback(data);
+      callback(null, data[0].description);
     }
   });
 };
